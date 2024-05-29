@@ -23,6 +23,7 @@ export default function App() {
           }
         }}/>)}
       {permission && (
+        <>
         <Button title="Add contact" onPress={async () => {
           console.log('add contact');
 
@@ -31,14 +32,24 @@ export default function App() {
             {
               contactType: 'person',
               name: '',
+              phoneNumbers: [{ number: '123456789', label: 'mobile' }],
             },
             {
               isNew: true,
             }
           );
+        }} />
+          <Button title="Pick contact" onPress={async () => {
+            console.log('pick contact');
 
-          console.log('done');
-        }}/>
+            const contact = await Contacts.presentContactPickerAsync({
+              fields: [Contacts.Fields.PhoneNumbers],
+            });
+
+            console.log('pick contact result');
+            console.log(JSON.stringify(contact, null, 2));
+          }} />
+        </>
       )}
       <StatusBar style="auto"/>
     </View>
